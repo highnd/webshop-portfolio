@@ -2,7 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+.stroke-text {
+  color: transparent;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgb(173, 243, 233);
+  -webkit-text-fill-color: #3524f1;
+  text-shadow: 0px 0px 10px 0px rgba(244, 240, 244, 0.29);
+}
+.header-stroke-text {
+  color: transparent;
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgb(41, 21, 88);
+  text-shadow: 0px 0px 10px 0px rgba(244, 240, 244, 0.29);
+}
+
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -24,4 +40,17 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+} */
+
+@layer base {
+  .input {
+    @apply w-full h-full text-lg text-black  bg-transparent  outline-none  border-[2px] border-gray-200 rounded-[40px] placeholder:text-black/30  pl-6 pr-12 focus:ring-2 focus:ring-blue-500 bg-slate-100;
+  }
+
+  .icon {
+    @apply absolute right-[20px] bottom-4 text-blue-700 text-lg;
+  }
+  .custom-button {
+    @apply my-4 transition-all duration-300 flex items-center justify-center  overflow-hidden rounded-full;
+  }
 }
