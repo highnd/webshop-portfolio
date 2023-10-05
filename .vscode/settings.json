@@ -1,3 +1,11 @@
 {
-  "cSpell.words": ["decodedtoken", "signup"]
+  "cSpell.words": [
+    "changepassword",
+    "decodedtoken",
+    "dont",
+    "forgetpassword",
+    "sendemail",
+    "signup",
+    "verifyemail"
+  ]
 }

@@ -1,35 +1,32 @@
 "use client";
-import CustomButton from "@/components/CustomBtn";
-import CustomInput from "@/components/CustomInput";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { SignUpForm } from "@/types";
-import toast from "react-hot-toast";
+import CustomButton from "@/components/CustomBtn";
+import Link from "next/link";
+import CustomInput from "@/components/CustomInput";
 
-import { BiSolidUser } from "react-icons/bi";
 import { MdEmail } from "react-icons/md";
-import { RiLockPasswordFill } from "react-icons/ri";
+import axios from "axios";
 
-const Login = () => {
+const ForgetPassword = () => {
   const router = useRouter();
   const [user, setUser] = useState({
     email: "",
-    password: "",
   });
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const onLogIn = async () => {
+  const sendEmail = async () => {
     try {
       setLoading(true);
-      const response = await axios.post("/api/users/login", user);
-      console.log("login success", response.data);
-      router.push(`/profile`);
+      await axios.post("/api/users/sendemail", {
+        emailType: "RESET",
+        email: user.email,
+      });
+      alert("email sent");
+      console.log("reset pass link sent");
     } catch (error: any) {
-      toast.error("error.message");
       console.log(error.message);
     } finally {
       setLoading(false);
@@ -37,7 +34,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (user.email == "" || user.password == "") {
+    if (user.email == "") {
       setButtonDisabled(true);
     } else {
       setButtonDisabled(false);
@@ -53,7 +50,7 @@ const Login = () => {
           alt="effect"
           width={500}
           height={500}
-          className="absolute left-0 xl:h-[500px] xl:w-[500px] w-64 h-64  bottom-0 z-0  lg:rounded-xl"
+          className="absolute left-0 xl:h-[300px] xl:w-[300px] w-64 h-64  bottom-0 z-0  lg:rounded-xl"
         />
 
         {/* ----sign up info---- */}
@@ -81,7 +78,7 @@ const Login = () => {
               {loading ? (
                 <span className="text-green-500">Processing</span>
               ) : (
-                "Log in"
+                "Verification"
               )}
             </h1>
 
@@ -97,36 +94,15 @@ const Login = () => {
               value={user.email}
               onChange={(e) => setUser({ ...user, email: e.target.value })}
             />
-            {/*  -----password---- */}
-            <CustomInput
-              placeholder="password"
-              inputType="password"
-              containerStyles=" w-full h-[50px]  mb-4 relative "
-              inputStyle="input"
-              addIcon={true}
-              icon={<RiLockPasswordFill />}
-              iconStyle="icon"
-              value={user.password}
-              onChange={(e) => setUser({ ...user, password: e.target.value })}
-            />
-
-            {/* --- remember pass / forgot pass ----*/}
-            <div className=" flex justify-between text-slate-800 text-md m-2 ">
-              <label className="flex gap-2 font-bold ">
-                <input type="checkbox" />
-                <p>remember me</p>
-              </label>
-              <Link href={"/forgetpassword"}>Forgot password</Link>
-            </div>
 
             {/*---- submit button--- */}
             <CustomButton
               disabled={buttonDisabled ? true : false}
-              title={"Log In"}
+              title={"Send Email"}
               titleStyle="group-hover:-translate-x-[40%]  transition-all duration-500"
               addArrow={true}
               containerStyles="text-white  border bg-emerald-600 border-white/20 w-full py-2 px-8  hover:border-blue-800 hover:bg-indigo-800 font-bold  group"
-              handleClick={onLogIn}
+              handleClick={sendEmail}
             />
           </>
         </div>
@@ -135,4 +111,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ForgetPassword;
