@@ -28,7 +28,16 @@ export interface SignUpForm {
   username: string;
 }
 
+export interface ParallaxProps {
+  type: string;
+}
+
 export interface searchManufacturerProps {
   manufacturer: string;
   setManufacturer: (manufacturer: string) => void;
+}
+
+export interface customTextTyping {
+  title: string;
+  textStyles: string;
 }
